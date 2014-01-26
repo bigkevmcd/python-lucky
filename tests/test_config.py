@@ -116,5 +116,3 @@ class ConfigTestCase(TestCase):
             config = Config.load_from_homedir()
 
         self.assertIsNone(config)
-
-

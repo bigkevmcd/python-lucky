@@ -32,7 +32,7 @@ class BoardsTestCase(TestCase):
 
 
     def test_list_correct_path_and_authentication(self):
-        """Boards.all() returns all boards for the configured account."""
+        """Boards.list() returns all boards for the configured account."""
         captured_requests = []
         with HTTMock(mock_url(r"\/Kanban\/API/Boards$", "get_boards.json", captured_requests)):
             boards = list(self.boards.list())
@@ -69,7 +69,7 @@ class BoardsTestCase(TestCase):
             "is_archived": False,
             "title": u"Test Board C"}, boards[2])
 
-    def test_all_with_error(self):
+    def test_list_with_error(self):
         """
         """
         # TODO: Test this with an error response
@@ -79,7 +79,7 @@ class BoardsTestCase(TestCase):
         Boards.get(board_id) returns the board with the supplied
         identifier.
         """
-        with HTTMock(mock_url(r".*\/Boards\/12345$", "get_board.json", [])):
+        with HTTMock(mock_url(r".*\/Boards\/12345$", "get_board.json")):
             board = self.boards.get("12345")
 
         self.assertEqual("Simple Board", board.title)
@@ -89,7 +89,18 @@ class BoardsTestCase(TestCase):
         self.assertEqual(
             [u"Ready", u"In Process", u"Development",
              u"Testing", u"Deployment", u"Done"],
-            [lane["Title"] for lane in board.lanes])
+            [lane.title for lane in board.lanes])
+        self.assertEqual(
+            {101303: u'Task',
+             101304: u'Feature',
+             101305: u'Improvement',
+             101306: u'Defect'},
+            board.card_types)
+
+    def test_get_with_error(self):
+        """
+        """
+        # TODO: Test this with an error response
 
 
 #    def test_get_identifiers(self):
@@ -122,14 +133,19 @@ class BoardsTestCase(TestCase):
 #        self.assertEqual({"testing": "testing"}, result)
 #
 #
-#class BoardTest(TestCase):
-#
-#    def setUp(self):
-#        config = leankit.Config({})
-#        self.board = Board(config, "12345")
-#
-#    def test_get_card(self):
-#        """Board.get_card returns all boards for the configured result."""
-#        with HTTMock(mock_url("\/Boards$", json.dumps({"testing": "testing"}))):
-#            result = self.boards.all()
-#        self.assertEqual({"testing": "testing"}, result)
+class BoardTest(TestCase):
+
+    def setUp(self):
+       config = leankit.Config("testing", "testing@example.com", "password")
+       self.boards = Boards(config)
+
+    def test_get_lane(self):
+        """
+        Board.get_lane returns the details for the lane with the specified id.
+        """
+        with HTTMock(mock_url(r".*\/Boards\/12345$", "get_board.json")):
+            board = self.boards.get("12345")
+        lane = board.get_lane_by_id(101107)
+        self.assertEqual("Ready", lane.title)
+        self.assertEqual(2, len(lane.cards))
+        self.assertEqual("Sample 11", lane.cards[0].title)

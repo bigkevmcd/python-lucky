@@ -5,7 +5,9 @@ import os
 from os.path import abspath, join, dirname
 from collections import namedtuple
 
+
 sys.path.insert(0, abspath(join(dirname(__file__), "..")))
+
 
 from leankit.config import Config
 from leankit.board import Boards
@@ -16,7 +18,9 @@ def pprinttable(rows, output=sys.stdout):
         headers = rows[0]._fields
         lens = []
         for i in range(len(rows[0])):
-            lens.append(len(max([x[i] for x in rows] + [headers[i]], key=lambda x: len(str(x)))))
+            lens.append(
+                len(max([x[i] for x in rows] + [headers[i]],
+                    key=lambda x: len(str(x)))))
         formats = []
         hformats = []
         for i in range(len(rows[0])):
@@ -36,13 +40,53 @@ def pprinttable(rows, output=sys.stdout):
         row = rows[0]
         hwidth = len(max(row._fields, key=lambda x: len(x)))
         for i in range(len(row)):
-            output.write("%s*S = %s" % (hwidth, row._fields[o], row[i]) + "\n")
+            output.write("%*s = %s" % (hwidth,row._fields[i],row[i]) + "\n")
 
 
 def create_parser():
     parser = argparse.ArgumentParser(description="Leankit command-line tool")
-    parser.add_argument("command")
+    subparsers = parser.add_subparsers(
+        title="subcommands", help="subcommand help",
+        description="valid subcommands",
+        dest="command")
+    list_boards = subparsers.add_parser(
+        "list-boards",
+        help="list all boards in the account")
+    list_boards.add_argument(
+        "--descriptions",
+        help="Output board descriptions",
+        default=False, action="store_true")
+
+    show_board = subparsers.add_parser(
+        "show-board", help="Display board details")
+    show_board.add_argument("board", help="Board id to display")
+    show_board.add_argument("--cards", help="Display cards for board")
+
     return parser
+
+
+def list_boards(config, args):
+    board_tuple = namedtuple("Board", ["id", "title"])
+    boards = []
+    for board in Boards(config).list():
+        boards.append(board_tuple(str(board["board_id"]), board["title"]))
+    pprinttable(boards)
+
+
+def show_board(config, args):
+    board = Boards(config).get(args.board)
+    items = []
+    if not args.cards:
+        board_tuple = namedtuple("Lane", ["id", "title"])
+        for lane in board.lanes:
+            items.append(board_tuple(str(lane.id), lane.title))
+    else:
+        card_tuple = namedtuple("Card", ["id", "title", "user", "type"])
+        lane = board.get_lane_by_id(int(args.cards))
+        for card in lane.cards:
+            items.append(card_tuple(str(card.id), card.title, card.assigned_user, board.card_types[card.type_id]))
+        
+    pprinttable(items)
 
 
 def main():
@@ -54,11 +98,10 @@ def main():
         sys.exit("No configuration loaded")
 
     if args.command == "list-boards":
-        board_tuple = namedtuple("Board",["id","title"])
-        boards = []
-        for board in Boards(config).list():
-            boards.append(board_tuple(str(board["board_id"]), board["title"]))
-        pprinttable(boards)
+        list_boards(config, args)
+
+    elif args.command == "show-board":
+        show_board(config, args)
 
 
 if __name__ == "__main__":
