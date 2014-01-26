@@ -8,6 +8,10 @@ def dict_from_items(data, items):
     return dict(result)
 
 
+def extract_mapping(items):
+    return {t["Id"]: t["Name"]for t in items}
+
+
 class Boards(object):
 
     def __init__(self, config):
@@ -40,6 +44,18 @@ class Boards(object):
             response.json()["ReplyData"][0])
 
 
+    def get_identifiers(self, board_id):
+        response = self._get("Boards/%s/GetBoardIdentifiers" % board_id)
+        result = response.json()["ReplyData"][0]
+        response = {}
+        response["card_types"] = extract_mapping(result["CardTypes"])
+        response["users"] = extract_mapping(result["BoardUsers"])
+        response["lanes"] = extract_mapping(result["Lanes"])
+        response["classes_of_service"] = extract_mapping(result["ClassesOfService"])
+        response["priorities"] = extract_mapping(result["Priorities"])
+        return response
+
+
 class Board(object):
 
     def __init__(self, config, board_id, title, description, active):
@@ -61,11 +77,7 @@ class Board(object):
             data["Active"])
         board.lanes = [Lane.create_from_lane_json(config, lane)
                        for lane in data["Lanes"]]
-        for card_type in data["CardTypes"]:
-            details = dict_from_items(card_type, ["Id", "Name"])
-            board
-        card_types = {t["Id"]: t["Name"]for t in data["CardTypes"]}
-        board.card_types = card_types
+        board.card_types = extract_mapping(data["CardTypes"])
         return board
 
     def get_lane_by_id(self, lane_id):
@@ -76,6 +88,13 @@ class Board(object):
             if lane.id == lane_id:
                 return lane
 
+    def get_lane_by_title(self, title):
+        """
+        Fetch a lane by the title.
+        """
+        for lane in self.lanes:
+            if lane.title == title:
+                return lane
 
 class Lane(object):
     def __init__(self, config, lane_id, title, index, card_limit):
