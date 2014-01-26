@@ -1,0 +1,12 @@
+{
+    "ReplyCode": 200,
+    "ReplyText": "Board history since last update successfully retrieved.",
+    "ReplyData": [
+        [
+            {
+                "CardId": 101621,
+                "Message": "Demo User moved the Card [Sample 18] from Development: Ready to Development: In Process."
+            }
+        ]
+    ]
+}

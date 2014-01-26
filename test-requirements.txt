@@ -1,0 +1,3 @@
+-r requirements.txt
+httmock==1.1.1
+mock==1.0.1

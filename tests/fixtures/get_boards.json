@@ -1,0 +1,29 @@
+{
+     "ReplyCode": 200,
+     "ReplyText": "Board(s) successfully retrieved.",
+     "ReplyData": [
+           [
+              {
+                "Id": 101,
+                "Title": "Test Board A",
+                "Description": "The first test board.",
+                "IsArchived": false,
+                "CreationDate": "08/19/2009"
+              },
+              {
+                "Id": 102,
+                "Title": "Test Board B",
+                "Description": "Extra wide lanes",
+                "IsArchived": false,
+                "CreationDate": "08/19/2009"
+              },
+              {
+                "Id": 103,
+                "Title": "Test Board C",
+                "Description": "",
+                "IsArchived": false,
+                "CreationDate": "08/19/2009"
+              }
+          ]
+     ]
+}

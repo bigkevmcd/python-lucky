@@ -1,0 +1,32 @@
+{
+    "ReplyCode": 200,
+    "ReplyText": "Board history since last update successfully retrieved.",
+    "ReplyData": [
+        [
+            {
+                "CardId": 101621,
+                "Message": "Demo User moved the Card [Sample 18] from Development: In Process to Testing: In Process."
+            },
+            {
+                "CardId": 101611,
+                "Message": "Demo User moved the Card [Sample 6] from Testing: Ready to Testing: In Process."
+            },
+            {
+                "CardId": 101624,
+                "Message": "Demo User moved the Card [Sample 21] from Testing: In Process to Deployment: Ready."
+            },
+            {
+                "CardId": 101615,
+                "Message": "Demo User moved the Card [Sample 12] from Deployment: Ready to Deployment: In Process."
+            },
+            {
+                "CardId": 101619,
+                "Message": "Demo User moved the Card [Sample 16] from Done to Deployment: In Process."
+            },
+            {
+                "CardId": -1,
+                "Message": "Numerous events have occurred on the board."
+            }
+        ]
+    ]
+} 

@@ -1,0 +1,118 @@
+{
+    "ReplyCode": 200,
+    "ReplyText": "The Board Identifiers were retrieved successfully.",
+    "ReplyData": [
+        {
+            "BoardId": 101000,
+            "CardTypes": [
+                {
+                    "Id": 101303,
+                    "Name": "Task"
+                },
+                {
+                    "Id": 101304,
+                    "Name": "Feature"
+                },
+                {
+                    "Id": 101305,
+                    "Name": "Improvement"
+                },
+                {
+                    "Id": 101306,
+                    "Name": "Defect"
+                }
+            ],
+            "BoardUsers": [
+                {
+                    "Id": 1,
+                    "Name": "demouser@leankitkanban.com"
+                }
+            ],
+            "Lanes": [
+                {
+                    "Id": 101101,
+                    "Name": "Backlog"
+                },
+                {
+                    "Id": 101102,
+                    "Name": "Archive"
+                },
+                {
+                    "Id": 101103,
+                    "Name": "Analysis"
+                },
+                {
+                    "Id": 101104,
+                    "Name": "Development"
+                },
+                {
+                    "Id": 101105,
+                    "Name": "Testing"
+                },
+                {
+                    "Id": 101106,
+                    "Name": "Done"
+                },
+                {
+                    "Id": 101107,
+                    "Name": "Analysis:Ready"
+                },
+                {
+                    "Id": 101108,
+                    "Name": "Analysis:In Process"
+                },
+                {
+                    "Id": 101109,
+                    "Name": "Development:Ready"
+                },
+                {
+                    "Id": 101110,
+                    "Name": "Development:In Process"
+                },
+                {
+                    "Id": 101111,
+                    "Name": "Testing:Ready"
+                },
+                {
+                    "Id": 101112,
+                    "Name": "Testing:In Process"
+                },
+                {
+                    "Id": 101113,
+                    "Name": "Deployment"
+                },
+                {
+                    "Id": 101114,
+                    "Name": "Deployment:Ready"
+                },
+                {
+                    "Id": 101115,
+                    "Name": "Deployment:In Process"
+                }
+            ],
+            "ClassesOfService": [
+                {
+                    "Id": 101407,
+                    "Name": "Date Dependent"
+                },
+                {
+                    "Id": 101405,
+                    "Name": "Expedite"
+                },
+                {
+                    "Id": 101406,
+                    "Name": "Regulatory"
+                },
+                {
+                    "Id": 101404,
+                    "Name": "Standard"
+                }
+            ],
+            "Priorities":[
+                {"Id":3,"Name":"Critical"},
+                {"Id":2,"Name":"High"},
+                {"Id":1,"Name":"Normal"},
+                {"Id":0,"Name":"Low"}]}]
+ }
+    ]
+}

@@ -1,0 +1,5 @@
+[config]
+account = newtest
+email = newtest@example.com
+password = newpassword
+date_format = %Y-%m-%d
