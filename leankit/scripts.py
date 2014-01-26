@@ -31,12 +31,12 @@ def pprinttable(rows, output=sys.stdout):
         output.write((hpattern + "\n") % tuple(headers))
         output.write(separator + "\n")
         for line in rows:
-            output.write((pattern + "\n" % tuple(line)))
+            output.write((pattern % tuple(line)) + "\n")
     elif len(rows) == 1:
         row = rows[0]
         hwidth = len(max(row._fields, key=lambda x: len(x)))
         for i in range(len(row)):
-            output.write("%s*S = %s\n" % (hwidth, row._fields[o], row[i]))
+            output.write("%s*S = %s" % (hwidth, row._fields[o], row[i]) + "\n")
 
 
 def create_parser():
@@ -54,10 +54,10 @@ def main():
         sys.exit("No configuration loaded")
 
     if args.command == "list-boards":
-        board_tuple = namedtuple("Board",["id","title","description"])
+        board_tuple = namedtuple("Board",["id","title"])
         boards = []
         for board in Boards(config).list():
-            boards.append(board_tuple(board["board_id"] , board["title"], board["description"]))
+            boards.append(board_tuple(str(board["board_id"]), board["title"]))
         pprinttable(boards)
 
 

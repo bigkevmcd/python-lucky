@@ -29,7 +29,7 @@ setup(
     test_suite='tests',
     entry_points={
         'console_scripts': [
-            'leankit = leankit.cmd:main'
+            'leankit = leankit.scripts:main'
         ]
     }
 )
