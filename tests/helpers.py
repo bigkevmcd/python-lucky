@@ -3,6 +3,9 @@ import inspect
 
 
 def get_fixture_path(fixture_name):
+    """
+    Returns the path to a fixture relative to the file the caller is in.
+    """
     caller_path = inspect.getfile(inspect.currentframe().f_back)
     return path.join(path.dirname(caller_path), "fixtures", fixture_name)
 

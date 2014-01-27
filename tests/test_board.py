@@ -13,6 +13,9 @@ from leankit.board import Boards, Board
 from .helpers import load_fixture
 
 
+# Creates a closure that matches against the URL we expect
+# if mock_requests is provided as a list, then record the
+# request objects we receive.
 def mock_url(url, fixture, mock_requests=None):
     data = load_fixture(fixture)
     mock_requests = mock_requests
@@ -92,6 +95,8 @@ class BoardsTestCase(TestCase):
 
     def test_list_with_error(self):
         """
+        If we get an error, we should raise an application specific error
+        with the details so that effective debugging can be carried out.
         """
         # TODO: Test this with an error response
 
@@ -120,6 +125,8 @@ class BoardsTestCase(TestCase):
 
     def test_get_with_error(self):
         """
+        If we get an error, we should raise an application specific error
+        with the details so that effective debugging can be carried out.
         """
         # TODO: Test this with an error response
 

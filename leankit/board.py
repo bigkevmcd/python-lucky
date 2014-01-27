@@ -38,20 +38,29 @@ class Boards(object):
             }
 
     def get(self, board_id):
+        """
+        Fetch a board by id.
+        """
         response = self._get("Boards/%s" % board_id)
         return Board.create_from_board_json(
             self.config,
             response.json()["ReplyData"][0])
 
-
     def get_identifiers(self, board_id):
+        """
+        Returns a dictionary with the board identifiers
+        as dictionaries for performing lookups on.
+
+        TODO: This should probably provide caching functionality.
+        """
         response = self._get("Boards/%s/GetBoardIdentifiers" % board_id)
         result = response.json()["ReplyData"][0]
         response = {}
         response["card_types"] = extract_mapping(result["CardTypes"])
         response["users"] = extract_mapping(result["BoardUsers"])
         response["lanes"] = extract_mapping(result["Lanes"])
-        response["classes_of_service"] = extract_mapping(result["ClassesOfService"])
+        response["classes_of_service"] = extract_mapping(
+            result["ClassesOfService"])
         response["priorities"] = extract_mapping(result["Priorities"])
         return response
 
@@ -96,6 +105,7 @@ class Board(object):
             if lane.title == title:
                 return lane
 
+
 class Lane(object):
     def __init__(self, config, lane_id, title, index, card_limit):
         self.id = lane_id
@@ -111,10 +121,11 @@ class Lane(object):
             data["Title"],
             data["Index"],
             data["CardLimit"]
-            )
+        )
         lane.cards = [Card.create_from_card_json(config, card)
-                     for card in data["Cards"]]
+                      for card in data["Cards"]]
         return lane
+
 
 class Card(object):
     def __init__(self, config, card_id, title, type_id, assigned_user):
