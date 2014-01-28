@@ -15,7 +15,7 @@ test_requirements= get_requirements("test-requirements.txt")
 
 
 setup(
-    name='leankit',
+    name='lucky',
     version='0.1',
     description='An lean api for connecting to Leankit.',
     author_email='kevin@bigkevmcd.com',
@@ -23,13 +23,13 @@ setup(
     classifiers=[],
     include_package_data=True,
     license='MIT',
-    packages=['leankit'],
+    packages=['lucky'],
     install_requires=install_requirements,
     tests_require=test_requirements,
     test_suite='tests',
     entry_points={
         'console_scripts': [
-            'leankit = leankit.scripts:main'
+            'lucky = lucky.scripts:main'
         ]
     }
 )

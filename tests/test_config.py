@@ -3,7 +3,7 @@ import os
 
 import mock
 
-from leankit.config import Config
+from lucky.config import Config
 from .helpers import get_fixture_path
 
 
@@ -55,7 +55,7 @@ class ConfigTestCase(TestCase):
         config = Config.load_from_env({})
         self.assertIsNone(config)
 
-    @mock.patch("leankit.config.expanduser")
+    @mock.patch("lucky.config.expanduser")
     def test_load_from_homedir(self, expanduser_mock):
         """
         Config.load_from_homedir reads a simple config file in
@@ -73,7 +73,7 @@ class ConfigTestCase(TestCase):
 
         expanduser_mock.assert_called_once_with("~/.luckyrc")
 
-    @mock.patch("leankit.config.expanduser")
+    @mock.patch("lucky.config.expanduser")
     def test_load_from_missing_homedir_file(self, expanduser_mock):
         """Attempt to load from missing ~/.luckyrc.
 
@@ -87,7 +87,7 @@ class ConfigTestCase(TestCase):
 
         self.assertIsNone(config)
 
-    @mock.patch("leankit.config.expanduser")
+    @mock.patch("lucky.config.expanduser")
     def test_load_from_missing_homedir_file(self, expanduser_mock):
         """Attempt to load from missing ~/.luckyrc.
 
@@ -101,7 +101,7 @@ class ConfigTestCase(TestCase):
 
         self.assertIsNone(config)
 
-    @mock.patch('leankit.config.expanduser')
+    @mock.patch('lucky.config.expanduser')
     def test_load_from_incomplete_homedir_file(self, expanduser_mock):
         """Attempt to load from incomplete config."""
         fixture_path = get_fixture_path("non-existent-file")

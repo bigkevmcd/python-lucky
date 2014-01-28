@@ -1,32 +1,13 @@
 # Copyright 2014 Kevin McDermott
-import json
 from datetime import date
 from unittest import TestCase
-import pprint
 
-import requests
-from httmock import urlmatch, HTTMock
+from httmock import HTTMock
 
-import leankit
-from leankit.board import Boards, Board
+import lucky
+from lucky.board import Boards
 
-from .helpers import load_fixture
-
-
-# Creates a closure that matches against the URL we expect
-# if mock_requests is provided as a list, then record the
-# request objects we receive.
-def mock_url(url, fixture, mock_requests=None):
-    data = load_fixture(fixture)
-    mock_requests = mock_requests
-
-    @urlmatch(path=url)
-    def mock_url(url, request):
-        if mock_requests is not None:
-            mock_requests.append(request)
-        return data
-    return mock_url
-
+from .helpers import mock_url
 
 test_lanes = {
     101101: "Backlog",
@@ -50,7 +31,7 @@ test_lanes = {
 class BoardsTestCase(TestCase):
 
     def setUp(self):
-        config = leankit.Config("testing", "testing@example.com", "password")
+        config = lucky.Config("testing", "testing@example.com", "password")
         self.boards = Boards(config)
 
     def test_list_correct_path_and_authentication(self):
@@ -181,7 +162,7 @@ class BoardsTestCase(TestCase):
 class BoardTest(TestCase):
 
     def setUp(self):
-        config = leankit.Config("testing", "testing@example.com", "password")
+        config = lucky.Config("testing", "testing@example.com", "password")
         self.boards = Boards(config)
 
     def test_get_lane_by_id(self):

@@ -5,12 +5,10 @@ import os
 from os.path import abspath, join, dirname
 from collections import namedtuple
 
+# sys.path.insert(0, abspath(join(dirname(__file__), "..")))
 
-sys.path.insert(0, abspath(join(dirname(__file__), "..")))
-
-
-from leankit.config import Config
-from leankit.board import Boards
+from lucky.config import Config
+from lucky.board import Boards
 
 
 def pprinttable(rows, output=sys.stdout):
@@ -69,12 +67,12 @@ def create_parser():
     return parser
 
 
-def list_boards(config, args):
+def list_boards(config, args, output=sys.stdout):
     board_tuple = namedtuple("Board", ["id", "title"])
     boards = []
     for board in Boards(config).list():
         boards.append(board_tuple(str(board["board_id"]), board["title"]))
-    pprinttable(boards)
+    pprinttable(boards, output=output)
 
 
 def show_board(config, args):
